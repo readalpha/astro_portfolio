@@ -1,0 +1,448 @@
+.init {
+  padding-top: getSize(108vw);
+
+  @include media(sp, min) {
+    padding-top: 95px;
+    overflow: hidden;
+  }
+}
+
+$unit: 0.9;
+
+.init-kv_ttlTxt {
+  display: block;
+  &.mod-1 {
+    font-size: getSize(24, 750) + "vw";
+    letter-spacing: 0.07em;
+
+    @include middle {
+      font-size: getSize(24 * $unit, 1400) + "vw";
+    }
+    @include media(sp, min) {
+      font-size: 24px * $unit;
+    }
+  }
+  &.mod-2 {
+    font-size: getSize(42, 750) + "vw";
+    line-height: lh(66.91, 42);
+    margin-top: getSize(21vw);
+    font-weight: 500;
+    letter-spacing: 0.055em;
+    white-space: noWrap;
+    @include middle {
+      font-size: getSize(50 * $unit, 1400) + "vw";
+    }
+    @include media(sp, min) {
+      font-size: 50px * $unit;
+      line-height: lh(84, 50);
+      margin-top: 2.7% * $unit;
+    }
+  }
+}
+
+.init-kv_txt {
+  font-size: getSize(25, 750) + "vw";
+  line-height: lh(59, 25);
+  font-weight: bold;
+  margin-top: getSize(36vw);
+  margin-left: getSize(11vw);
+  letter-spacing: 0.08em;
+  @include middle {
+    font-size: getSize(25 * $unit, 1400) + "vw";
+  }
+  @include media(sp, min) {
+    font-size: 25px * $unit;
+    line-height: lh(59, 25);
+    margin-top: 0.5% * $unit;
+    margin-left: getSize(16% * $unit, 914);
+  }
+}
+
+.init-about_head {
+  font-size: getSize(24, 750) + "vw";
+  font-weight: bold;
+  text-align: center;
+
+  @include media(sp, max) {
+    @include fadeUp;
+    &.add-inView {
+      @include show;
+    }
+  }
+
+  @include middle {
+    font-size: getSize(20 * $unit, 1400) + "vw";
+  }
+  @include media(sp, min) {
+    font-size: 20px * $unit;
+    text-align: left;
+    transform: translateX(1.1% * $unit);
+
+    .mod-1 .mod-white & {
+      transform: translateX(-3.9% * $unit);
+    }
+
+    .mod-2 .mod-gray & {
+      transform: none;
+    }
+    .mod-3 .mod-gray & {
+      transform: translateX(-3.2% * $unit);
+    }
+  }
+}
+
+.init-about_txt {
+  font-size: getSize(25, 750) + "vw";
+  line-height: lh(56, 25);
+  color: #fff;
+  margin-top: getSize(34vw);
+  margin-left: getSize(51vw);
+  letter-spacing: 0.03em;
+
+  @include media(sp, max) {
+    @include fadeUp;
+    &.add-inView {
+      @include show;
+    }
+  }
+
+  @include middle {
+    font-size: getSize(24 * $unit, 1400) + "vw";
+  }
+
+  @include media(sp, min) {
+    font-size: 24px * $unit;
+    line-height: lh(59, 24);
+    white-space: noWrap;
+    margin: 0;
+    margin-top: -2% * $unit;
+  }
+
+  .mod-3 & {
+    @include middle {
+      font-size: getSize(23 * $unit, 1400) + "vw";
+    }
+
+    @include media(sp, min) {
+      font-size: 23px * $unit;
+      line-height: lh(59, 23);
+      line-height: 2.3;
+      white-space: noWrap;
+      margin: 0;
+      margin-top: -2% * $unit;
+    }
+  }
+}
+
+.init-kv {
+  position: relative;
+  @include media(sp, min) {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+.init-kv_wrap {
+  position: relative;
+  width: getSize(624vw);
+  padding-top: getSize(33vw);
+  margin: getSize(0vw) getSize(48vw) getSize(33vw) getSize(50vw);
+  padding-left: getSize(40vw);
+
+  @include media(sp, min) {
+    width: getSize(914% * $unit, 1400);
+    max-width: 914px * $unit;
+    margin: getSize(71% * $unit, 1400) auto 0;
+    transform: translateX(-0.5% * $unit);
+    padding-top: 0.3% * $unit;
+    padding-left: 3% * $unit;
+  }
+
+  &::before {
+    @include after;
+    position: absolute;
+    top: 7.8%;
+    left: 0;
+    width: getSize(10vw);
+    background-color: $blue;
+    height: getSize(381vw);
+    @include middle {
+      height: getSize(332vw, 1400);
+    }
+    @include media(sp, min) {
+      width: getSize(10%, 914);
+      height: 332px;
+      top: 0.5%;
+    }
+  }
+}
+
+.init-about {
+  position: relative;
+  margin-top: getSize(83vw);
+
+  @include middle {
+    margin-top: 9% * $unit;
+  }
+  @include media(sp, min) {
+    margin-top: 126px * $unit;
+  }
+}
+
+.init-about_item {
+  position: relative;
+
+  &.mod-3 {
+    margin-top: getSize(95vw);
+
+    @include middle {
+      margin-top: 9%;
+    }
+    @include media(sp, min) {
+      margin-top: 126px;
+    }
+  }
+}
+
+.init-about_ttl {
+  width: getSize(534vw);
+  margin: 0 auto 0px getSize(126vw);
+
+  @include fadeUp;
+  &.add-inView {
+    @include show;
+  }
+
+  @include media(sp, min) {
+    width: getSize(465% * $unit, 1400);
+    margin: 0 auto;
+    transform: translateX(-1% * $unit);
+    max-width: 465px;
+
+    .mod-2 & {
+      width: getSize(480% * $unit, 1400);
+      max-width: 480px * $unit;
+    }
+
+    .mod-3 & {
+      width: getSize(481% * $unit, 1400);
+      max-width: 481px * $unit;
+    }
+  }
+}
+
+.init-about_box {
+  margin-top: -2px;
+  padding: getSize(50vw) 0 getSize(44vw);
+  @include middle {
+    padding: getSize(104% * $unit, 1400) 0 6.4%;
+  }
+  @include media(sp, min) {
+    padding: 104px * $unit 0 89.594px * $unit;
+  }
+
+  &.mod-blue {
+    background-color: $blue_g;
+
+    @include middle {
+      .mod-2 & {
+        padding: getSize(104% * $unit, 1400) 0 6.4%;
+      }
+    }
+    @include media(sp, min) {
+      .mod-2 & {
+        padding: 104px * $unit 0 89.594px * $unit;
+      }
+    }
+  }
+  &.mod-gray {
+    background-color: $gray_init;
+    padding: getSize(60vw) 0 getSize(95vw);
+    @include middle {
+      padding: 5% * $unit 0 6.4% * $unit;
+    }
+    @include media(sp, min) {
+      padding: 70px * $unit 0 89.594px * $unit;
+    }
+  }
+  &.mod-white {
+    background-color: #fff;
+    padding: getSize(85vw) 0 getSize(95vw);
+    @include middle {
+      padding: 4.8 * $unit 0 6.4% * $unit;
+    }
+    @include media(sp, min) {
+      padding: 67.195px * $unit 0 89.594px * $unit;
+    }
+  }
+
+  .mod-3 & {
+    &.mod-gray {
+      padding-bottom: getSize(145vw);
+      @include middle {
+        padding-bottom: 7.4% * $unit;
+      }
+      @include media(sp, min) {
+        padding-bottom: 103.594px * $unit;
+      }
+    }
+  }
+}
+
+.init-about_inner {
+  @include media(sp, min) {
+    @include fadeUp;
+    &.add-inView {
+      @include show;
+    }
+  }
+
+  @include media(sp, min) {
+    .mod-1 .mod-blue & {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      transform: translateX(3.1% * $unit);
+      width: getSize(989% * $unit, 1400);
+      margin: 0 auto;
+      max-width: 989px * $unit;
+    }
+
+    .mod-1 .mod-gray & {
+      width: getSize(1225% * $unit, 1400);
+      margin: 0 auto;
+      max-width: 1225px * $unit;
+    }
+    .mod-1 .mod-white & {
+      width: getSize(1111% * $unit, 1400);
+      margin: 0 auto;
+      max-width: 1111px * $unit;
+    }
+
+    .mod-2 .mod-blue & {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      transform: translateX(1.7% * $unit);
+      width: getSize(1126% * $unit, 1400);
+      margin: 0 auto;
+      max-width: 1126px * $unit;
+    }
+
+    .mod-2 .mod-gray & {
+      width: getSize(1257% * $unit, 1400);
+      margin: 0 auto;
+      max-width: 1257px * $unit;
+    }
+
+    .mod-3 .mod-blue & {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      transform: translateX(3.2% * $unit);
+      width: getSize(1032% * $unit, 1400);
+      max-width: 1032px * $unit;
+      margin: 0 auto;
+    }
+
+    .mod-3 .mod-gray & {
+      width: getSize(1124 * $unit, 1400);
+      max-width: 1124px * $unit;
+      margin: 0 auto;
+    }
+  }
+}
+
+.init-about_ttlHead {
+  width: getSize(222vw);
+  margin: 0 auto;
+
+  @include media(sp, max) {
+    @include fadeUp;
+    &.add-inView {
+      @include show;
+    }
+  }
+
+  @include media(sp, min) {
+    width: 22.8%;
+    margin: 0;
+  }
+
+  .mod-2 & {
+    width: getSize(383vw);
+    margin: 0 auto;
+    @include media(sp, min) {
+      width: 33.9% ;
+      margin: 0;
+    }
+  }
+  .mod-3 & {
+    width: getSize(258vw);
+    margin: 0px auto 0;
+    @include media(sp, min) {
+      width: 24.9% ;
+      margin: 0;
+    }
+  }
+}
+
+.init-about_flow {
+  @include media(sp, max) {
+    @include fadeUp;
+    &.add-inView {
+      @include show;
+    }
+  }
+
+  &.mod-flow {
+    overscroll-behavior: none;
+    overflow-x: auto !important; /* 横スクロールは許可 */
+    overflow-y: hidden !important; /* 縦スクロールは無効 */
+
+    @include media(sp, max) {
+      padding: 0 getSize(48vw);
+    }
+
+    margin-top: getSize(60vw);
+
+    @include media(sp, min) {
+      margin-top: 5% * $unit;
+    }
+  }
+
+  &.mod-triangle {
+    width: 91.4vw;
+    margin: getSize(50vw) auto 0 getSize(25vw);
+    @include media(sp, min) {
+      // width: getSize(997% * $unit, 1110);
+      width: 100%;
+      max-width: 997px * $unit;
+      margin: 3.6% * $unit 3.7% * $unit 0 auto;
+    }
+  }
+  &.mod-system {
+    width: getSize(651vw);
+    margin: getSize(50vw) auto 0 getSize(50vw);
+
+    @include media(sp, min) {
+      width: 100%;
+      margin: 0;
+      margin-top: 3.7% * $unit;
+    }
+  }
+  &.mod-data {
+    width: getSize(663vw);
+    margin: getSize(32vw) auto 0 getSize(38vw);
+    @include media(sp, min) {
+      width: getSize(1041% , 1124);
+      margin: 5% * $unit 3.3% * $unit 0 auto;
+    }
+  }
+}
+
+.init-about_flow_inline {
+  @include media(sp, max) {
+    width: getSize(1512vw);
+  }
+}

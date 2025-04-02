@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogPost from "../components/BlogPost.astro";
+import { getBlogs } from "../library/microcms";
+
+export async function getStaticPaths() {
+  // APIからブログデータを取得
+  const response = await getBlogs();
+
+  // ユニークなタグを収集
+  const uniqueTags = Array.from(
+    new Map(
+      response.contents
+        .flatMap((content) => content.tags) // 各記事の tags を平坦化
+        .map((tag) => [tag.id, { id: tag.id, name: tag.name }]), // Map のキーを tag.id に設定
+    ).values(), // 重複のない値だけを取得
+  );
+
+  // タグごとに関連する記事をフィルタリングして paths を生成
+  return uniqueTags.map((tag) => {
+    const filteredPosts = response.contents.filter((content) =>
+      content.tags.some((postTag) => postTag.id === tag.id),
+    );
+    return {
+      params: { tag: tag.id }, // 動的ルート用のパラメータ
+      props: { posts: filteredPosts }, // 関連する記事を渡す
+    };
+  });
+}
+
+// 動的ルートのパラメータとプロパティを取得
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+const props = {
+  id: "tag",
+  pageTitle: "タグ詳細ページ",
+};
+---
+
+<BaseLayout props={props}>
+  <main class="tags">
+    <h1 class="tags-ttl">{tag}のタグが付いた記事</h1>
+    <ul class="tags-list">
+      {
+        posts.map((post) => (
+          <li class="tags-item">
+            <a href={`/news/${post.id}`}>{post.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>
+
+<style>
+  .tags {
+    max-width: 1100px;
+    padding: 0 50px;
+    margin: 100px auto 100px;
+  }
+  .tags-ttl {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .tags-list {
+    margin-top: 50px;
+  }
+  .tags-item {
+    font-size: 16px;
+    margin-top: 15px;
+    > a {
+      color: #000;
+    }
+  }
+</style>

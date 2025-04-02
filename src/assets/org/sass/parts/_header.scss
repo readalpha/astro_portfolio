@@ -1,0 +1,306 @@
+.header {
+  position: fixed;
+  width: 100%;
+  height: getSize(108vw);
+  background-color: rgba($color: #fff, $alpha: 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 getSize(25%);
+  z-index: 10;
+  @include media(sp, max) {
+    top: -1px;
+  }
+  @include media(sp, min) {
+    height: 95px;
+    padding: 0 28px 0 56px;
+    top: 0;
+  }
+  @include middle() {
+    height: getSize(95vw, 1400);
+    padding: 0 getSize(28vw, 1400) 0 getSize(56vw, 1400);
+  }
+  #top & {
+    translate: 0 -100%;
+    transition: translate 0.3s, background-color 0.3s;
+    &.add-fixed {
+      translate: 0 0;
+    }
+  }
+
+  #top.add-visibleHeader & {
+    translate: 0 0%;
+    transition-delay: 0.5s;
+  }
+  
+
+  #about &,
+  #initiative & {
+    translate: 0 -100%;
+    transition: translate 0.3s, background-color 0.3s;
+
+    &.add-pageLoaded {
+      translate: 0 0;
+      transition: none !important;
+    }
+
+    &.add-fixed {
+      translate: 0 0;
+    }
+  }
+
+  &.add-headerOpen {
+    background-color: rgba($color: #fff, $alpha: 1);
+  }
+}
+
+.header-left {
+  position: relative;
+}
+.header-logo {
+  img {
+    width: 100%;
+  }
+}
+.header-logo_link {
+  @include hover;
+}
+
+/*-------- 
+ハンバーガーの見た目
+---------*/
+.header-btn {
+  display: inline-block;
+  height: getSize(34vw);
+  width: getSize(40vw);
+  position: relative;
+
+  @include media(sp, min) {
+    display: none;
+  }
+}
+
+.header-btn_inline {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  transition: opacity 0.5s, transform 0.5s, top 0.5s, bottom 0.5s;
+  transform-origin: center;
+
+  &:nth-child(1) {
+    top: 0;
+    right: 50%;
+    transform: translate(50%, 0%);
+
+    .add-headerOpen & {
+      top: 50%;
+      transform: translate(50%, -50%) rotate(45deg);
+    }
+  }
+  &:nth-child(2) {
+    bottom: 50%;
+    transform: translateY(50%);
+
+    .add-headerOpen & {
+      opacity: 0;
+    }
+  }
+  &:nth-child(3) {
+    bottom: 0;
+    right: 50%;
+    transform: translate(50%, 0%);
+
+    .add-headerOpen & {
+      bottom: 50%;
+      transform: translate(50%, 50%) rotate(-45deg);
+    }
+  }
+}
+
+.header-navWrap {
+  &.mod-pc {
+    display: none;
+
+    @include media(sp, min) {
+      display: block;
+    }
+  }
+
+  &.mod-sp {
+    position: absolute;
+    overflow-y: scroll;
+    height: calc(100vh - #{getSize(108vw)});
+    height: calc(101dvh - #{getSize(108vw)});
+    max-height: 0px;
+    position: absolute;
+    z-index: 2;
+    top: getSize(108vw);
+    left: 0;
+    width: 100%;
+    transition: max-height 0.5s;
+    background: url(../images/common/header/bg1.png) top center/100% auto;
+    background-color: #000;
+    overflow: scroll;
+    &:before {
+      // content: "";
+      background: url(../images/common/header/bg1.png) top center/100% auto;
+      background-color: #000;
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 101vh;
+      z-index: -2;
+      max-height: 0px;
+      transition: max-height 0.5s;
+    }
+    .add-headerOpen & {
+      max-height: calc(100vh - #{getSize(108vw)});
+      max-height: calc(101dvh - #{getSize(108vw)});
+      &:before {
+        max-height: 100vh;
+      }
+    }
+
+    @include media(sp, min) {
+      display: none;
+    }
+  }
+}
+.header-nav_inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(101dvh - #{getSize(108vw)});
+}
+
+.header-logo {
+  width: 18.2%;
+  @include media(sp, min) {
+    width: 75.9279px;
+  }
+  @include middle() {
+    width: getSize(75.9279vw, 1400);
+  }
+}
+
+.header-nav {
+  position: relative;
+
+  .mod-sp & {
+    width: 100%;
+  }
+}
+
+.header-navList {
+  .mod-sp & {
+    width: getSize(169%);
+    padding-top: getSize(75%);
+    margin: 0 auto;
+  }
+
+  .mod-pc & {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+  }
+}
+
+.header-navItem {
+  .mod-sp & {
+    margin: 0 auto;
+  }
+
+  .mod-pc & {
+    position: relative;
+
+    &::after {
+      @include after;
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      content: "";
+      display: inline-block;
+      width: 0%;
+      height: 2px;
+      background-color: #000;
+      transition: width 0.25s;
+    }
+
+    &:hover {
+      &::after {
+        width: calc(100% - 21px);
+      }
+    }
+  }
+
+  &:nth-child(n + 2) {
+    .mod-sp & {
+      margin-top: getSize(106vw);
+    }
+  }
+
+  &:nth-child(3) {
+    .mod-pc & {
+      margin-top: 8px;
+    }
+  }
+
+  &.mod-about {
+    width: getSize(105%, 169);
+    .mod-pc & {
+      width: 44px;
+    }
+    #about & {
+      &::after {
+        width: calc(100% - 21px);
+      }
+    }
+  }
+  &.mod-service {
+    width: 102%;
+    .mod-pc & {
+      width: 75.8525px;
+      transform: translateY(1px);
+    }
+
+    #initiative & {
+      &::after {
+        width: calc(100% - 21px);
+      }
+    }
+  }
+  &.mod-company {
+    width: getSize(169%, 169);
+    .mod-pc & {
+      width: 76px;
+    }
+  }
+  &.mod-contact {
+    width: getSize(134%, 169);
+    .mod-pc & {
+      width: 61px;
+    }
+  }
+}
+
+.header-navItem_link {
+  display: block;
+  width: 100%;
+}
+
+.header-navLogo {
+  .mod-sp & {
+    width: getSize(300%);
+    margin: getSize(100vw) auto 0;
+    padding-bottom: getSize(82%);
+  }
+  @include media(sp, min) {
+    display: none;
+  }
+}

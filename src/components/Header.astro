@@ -1,0 +1,50 @@
+---
+import Img from "./Img.astro";
+const { props } = Astro.props;
+---
+
+<header id="js-header" class="header">
+  {
+    () => {
+      if (props.id === "top") {
+        return (
+          <h1 class="header_logo">
+            <a href="/">
+              <Img srcPaths={["common/logo.svg"]} />
+            </a>
+          </h1>
+        );
+      } else {
+        return (
+          <div class="header_logo">
+            <a href="/">
+              <Img srcPaths={["common/logo.svg"]} />
+            </a>
+          </div>
+        );
+      }
+    }
+  }
+</header>
+
+<style lang="scss">
+  @import "../assets/org/sass/style.scss";
+  .header {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    padding: getSize(62vw) 0 0;
+    @include media(sp, min) {
+      padding: 40px 0 0;
+    }
+  }
+  .header_logo {
+    display: block;
+    width: getSize(200vw);
+    margin: 0 auto;
+    @include media(sp, min) {
+      width: 102px;
+    }
+  }
+  
+</style>

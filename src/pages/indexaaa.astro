@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../assets/org/sass/style.scss";
+import { formatDate } from "../components/time.astro";
+const pageTitle = "私について?";
+import { getBlogs, getBlogDetail } from "../library/microcms";
+
+const response = await getBlogs();
+//タグ（とタグのid）を重複しないように取得
+const uniqueTags = Array.from(
+  new Map(
+    response.contents
+      .flatMap((content) => content.tags) // tagsを平坦化
+      .map((tag) => [tag.id, { id: tag.id, name: tag.name }]), // Map用のペアを作成
+  ).values(), // Mapの値だけを取得
+);
+const props = {
+  id: "top",
+  pageTitle: "トップページ",
+};
+
+export const postsPerPage = 8;
+
+// getStaticPaths()で動的なルートを設定
+export async function getStaticPaths({ paginate }) {
+  // 投稿を呼び出し
+  const allPosts = await getBlogs();
+
+  // 投稿を新しい順に並び替え
+  const sortedPosts = allPosts.sort((a, b) => {
+    const aDate = new Date(a.data.pubDate);
+    const bDate = new Date(b.data.pubDate);
+    return bDate.getTime() - aDate.getTime();
+  });
+
+  // 並び替えた投稿の配列から、1ページにX記事づつ入るようにページを生成
+  return paginate(sortedPosts, { pageSize: postsPerPage });
+}
+
+// paginate()関数を使用すると、各ページのデータはpageプロパティとして渡される
+const { page } = Astro.props;
+---
+
+<BaseLayout props={props}>
+  <main class="main">
+    <div class="top_article">
+      <ul class="top_article_list">
+        {
+          response.contents.map((content: any) => (
+            <li class="top_article_item">
+              <a href={`${content.id}`} class="top_article_link">
+                <figure class="top_article_img">
+                  <img src={content.eyecatch.url} alt={content.title} />
+                </figure>
+                <div class="top_article_textArea">
+                  <time
+                    class="top_article_date"
+                    datetime={formatDate(content.publishedAt)}
+                  >
+                    {formatDate(content.publishedAt)}
+                  </time>
+                  <h2 class="top_article_ttl">{content.title}</h2>
+                  <div class="top_article_tag">
+                    <div class="top_article_tag_inner">
+                      {content.tags[0].name}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- {page.url.prev ? <a href={page.url.prev}>前へ</a> : null}
+      {page.url.next ? <a href={page.url.next}>次へ</a> : null} -->
+    </div>
+  </main>
+</BaseLayout>
+
+<style lang="scss">
+  @import "../assets/org/sass/style.scss";
+  .main {
+    margin: 0 getSize(40vw);
+    padding-top: getSize(350vw);
+    @include media(sp, min) {
+      margin: 0 auto;
+      max-width: 1050px;
+      padding: 180px 40px 0;
+    }
+  }
+  .top_article {
+  }
+  .top_article_list {
+    @include media(sp,min){
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px 20px;
+    }
+  }
+  .top_article_item {
+    @include media(sp,min){
+      flex: 0 0 calc((100% - 40px) / 3);
+      display: flex;
+    }
+    & + & {
+      @include media(sp,max){
+        margin-top: getSize(80vw);
+      }
+    }
+    &:nth-of-type(n + 4) {
+      @include media(sp,min){
+        // margin-top: ;
+      }
+    }
+  }
+  .top_article_link {
+    display: flex;
+    flex-direction: column;
+  }
+  .top_article_img {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .top_article_textArea {
+    padding: getSize(20vw);
+    background-color: #fff;
+    @include media(sp,min){
+      padding: 20px;
+      flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+    }
+  }
+  .top_article_date {
+    font-size: getSize(24vw);
+    @include media(sp, min) {
+      font-size: 14px;
+    }
+  }
+  .top_article_ttl {
+    font-size: getSize(32vw);
+    margin-top: getSize(40vw);
+    text-align: justify;
+    line-height: 1.5;
+    @include media(sp,min){
+      font-size: 18px;
+      margin-top: 35PX;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      flex-grow: 1; 
+    }
+  }
+  .top_article_tag {
+    margin: getSize(40vw) 0 0 0;
+    text-align: right;
+    @include media(sp, min) {
+      margin-top: 30px;
+    }
+  }
+  .top_article_tag_inner {
+    display: inline-block;
+    padding: getSize(8vw) getSize(15vw);
+    background-color: #dedede;
+    font-weight: bold;
+    font-size: getSize(20vw);
+    @include media(sp,min){
+      font-size: 12px;
+      padding: 7px 7px;
+    }
+  }
+</style>

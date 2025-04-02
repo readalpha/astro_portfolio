@@ -1,0 +1,23 @@
+/*
+https://github.com/q-jutaku/coding_rule/blob/main/css.md#sass_utilscss
+*/
+
+.util {
+  &-pc {
+    display: none;
+
+    @include media(sp, min) {
+      display: block;
+    }
+  }
+
+  &-sp {
+    display: block;
+
+    @include media(sp, min) {
+      display: none;
+    }
+  }
+}
+
+

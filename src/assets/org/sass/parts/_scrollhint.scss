@@ -1,0 +1,50 @@
+.scroll-hint-icon-wrap {
+  @include media(sp, min) {
+    display: none;
+  }
+}
+$sizeRate_scrollHint:0.7;
+.scroll-hint-icon {
+  width: getSize(360vw * $sizeRate_scrollHint) ;
+  height: getSize(217vw * $sizeRate_scrollHint) ;
+  left: calc(50% - #{getSize(180vw * $sizeRate_scrollHint) });
+  top: calc(50% - #{getSize(120vw * $sizeRate_scrollHint) });
+  padding: getSize(60vw * $sizeRate_scrollHint)  getSize(30vw * $sizeRate_scrollHint)  getSize(30vw * $sizeRate_scrollHint) ;
+  &:before {
+    width: getSize(120vw * $sizeRate_scrollHint) ;
+    height: getSize(120vw * $sizeRate_scrollHint) ;
+  }
+  &:after {
+    width: getSize(102vw * $sizeRate_scrollHint) ;
+    height: getSize(42vw * $sizeRate_scrollHint) ;
+    top: getSize(30vw * $sizeRate_scrollHint) ;
+    margin-left: getSize(-60vw * $sizeRate_scrollHint) ;
+    background-size: 100% auto;
+  }
+}
+.scroll-hint-text {
+  display: none;
+}
+
+@keyframes scroll-hint-appear {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+.scroll-hint {
+  &.is-right-scrollable,
+  &.is-left-scrollable {
+    background: none !important;
+  }
+}

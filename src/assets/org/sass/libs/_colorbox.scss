@@ -1,0 +1,164 @@
+.colorbox-wrap {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+	opacity: 0;
+	transition: .2s;
+	z-index: 10000;
+	&.add-open {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.colorbox-bg {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .9);
+	opacity: 0;
+	visibility: hidden;
+	transition: .2s;
+	.add-open & {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.colorbox-inner {
+	position: absolute;
+	@media screen and (min-width:768px) {
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	} 
+	@media screen and (max-width:767px) {
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	&.add-loading {
+		&:before {
+			content: '';
+			display: block;
+			background: #000;
+			position: absolute;
+			z-index: 1;
+			top: -1px;
+			bottom: -1px;
+			right: -1px;
+			left: -1px;
+		}
+		&:after {
+			content: '';
+			display: block;
+			background: url(../img/loading.gif) center center/cover;
+			height: 32px;
+			width: 32px;
+			position: absolute;
+			z-index: 5; 
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			z-index: 2;
+		}
+	}
+}
+
+.colorbox-popList {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.colorbox-popItem {
+	// position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	opacity: 0;
+	display: none;
+	&.add-active {
+		opacity: 1;
+		display: block;
+	}
+}
+
+.colorbox-contentBox {
+	img {
+		width: 100%;
+	}
+}
+
+.colorbox_btn-close {
+	position: absolute;
+	height: 15px;
+	width: 15px;
+	top: 7px;
+	right: 7px;
+	background: transparent;
+	&:before,
+	&:after {
+		content: '';
+		height: 14px;
+		width: 1px;
+		background: #666666;
+		position: absolute;
+		top: 0;
+	}
+	&:before {
+		transform: rotate(45deg);
+	}
+	&:after {
+		transform: rotate(-45deg);
+	}
+}
+.colorbox_btn-prev,
+.colorbox_btn-next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent;
+	display: block;
+	cursor: pointer;
+	outline: none;
+	&:after {
+		content: '';
+		display: block;
+		height: 35px;
+		width: 35px;
+		border-top: solid 1px #eee;
+	}
+	
+}
+.colorbox_btn-prev {
+	left: -85px;
+	padding: 20px 10px 20px 30px;
+	&:after {
+		border-left: solid 1px #eee;
+		transform: rotate(-45deg);
+	}
+}
+.colorbox_btn-next {
+	right: -85px;
+	padding: 20px 30px 20px 10px;
+	&:after {
+		border-right: solid 1px #eee;
+		transform: rotate(45deg);
+	}
+}
+
+.colorbox-indexBox {
+	position: absolute;
+	top: -25px;
+	right: 0;
+	color: #ccc;
+}

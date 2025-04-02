@@ -1,0 +1,275 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getBlogs, getBlogDetail } from "../library/microcms";
+import type { GetStaticPathsOptions } from "astro";
+import { formatDate } from "../components/time.astro";
+import Img from "../components/Img.astro";
+import NavBtn from "../components/NavBtn.astro";
+import Pagination from "@philnash/astro-pagination";
+type Props = {
+  page: Page<CollectionEntry<"blogs">>;
+};
+
+
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
+  const posts = await getBlogs({ limit: 100 });
+  return paginate(posts.contents, { pageSize: 6 });
+};
+
+const { page } = Astro.props;
+
+const props = {
+  id: "top",
+  url: Astro.url,
+  pageTitle: "Read's Tech Blog",
+  description: "フロントエンドエンジニアとして活躍するReadAlphaのテックブログ兼雑記帳",
+  ogImage: "",
+};
+---
+
+<BaseLayout props={props}>
+  <main class="main">
+    <div class="top_article">
+      <ul class="top_article_list">
+        {/* page.dataでページデータを表示 */}
+        {
+          page.data.map((post) => {
+            return (
+            <li class="top_article_item">
+                <a href={`${post.id}`} class="top_article_link">
+                  <figure class="top_article_img">
+                    {
+                      post.eyecatch ? (
+                        <img src={post.eyecatch.url} alt={post.title} />
+                      ) : (
+                        <Img srcPaths={["common/noimage.jpg"]} alt="" />
+
+                      )
+                    }
+                  </figure>
+                  <div class="top_article_textArea">
+                    <time
+                      class="top_article_date"
+                      datetime={formatDate(post.publishedAt)}
+                    >
+                      {formatDate(post.publishedAt)}
+                    </time>
+                    <h2 class="top_article_ttl">{post.title}</h2>
+                    <div class="top_article_tag">
+                      <div class="top_article_tag_inner">
+                        {post.tags[0].name}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <nav class="pagination">
+        {/* page.currentPageで現在ページ、page.lastPageで総ページ数を表示 */}
+        <!-- <p class="pagination_text">page {page.currentPage}/{page.lastPage}</p> -->
+        <Pagination page={page} urlPattern={"/{}"}  showPrevNext={false}/>
+        <ul class="pagination_nav">
+          {/* page.url.prevがある場合は前ページへのリンクを表示 */}
+          {
+            page.url.prev && (
+              <li class="pagination_nav_item mod-prev">
+                <a href={page.url.prev} class="pagination_nav_link"><NavBtn /></a>
+              </li>
+            )
+          }
+          {/* page.url.nextがある場合は次ページへのリンクを表示 */}
+          {
+            page.url.next && (
+              <li class="pagination_nav_item mod-next">
+                <a href={page.url.next} class="pagination_nav_link mod-next"><NavBtn /></a>
+              </li>
+            )
+          }
+        </ul>
+      </nav>
+    </div>
+  </main>
+  
+</BaseLayout>
+
+<style lang="scss">
+  @import "../assets/org/sass/style.scss";
+  .main {
+    margin: 0 getSize(40vw);
+    padding-top: getSize(350vw);
+    @include media(sp, min) {
+      margin: 0 auto;
+      max-width: 1050px;
+      padding: 200px 40px 0;
+    }
+  }
+  .top_article {
+    padding-bottom: getSize(100vw);
+    @include media(sp,min){
+      padding-bottom: 100px;
+    }
+  }
+  .top_article_list {
+    @include media(sp,min){
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px 20px;
+    }
+  }
+  .top_article_item {
+    @include media(sp,min){
+      flex: 0 0 calc((100% - 40px) / 3);
+      display: flex;
+    }
+    & + & {
+      @include media(sp,max){
+        margin-top: getSize(80vw);
+      }
+    }
+    &:nth-of-type(n + 4) {
+      @include media(sp,min){
+        // margin-top: ;
+      }
+    }
+  }
+  .top_article_link {
+    display: flex;
+    flex-direction: column;
+  }
+  .top_article_img {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .top_article_textArea {
+    padding: getSize(20vw);
+    background-color: #fff;
+    @include media(sp,min){
+      padding: 20px;
+      flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+    }
+  }
+  .top_article_date {
+    font-size: getSize(24vw);
+    @include media(sp, min) {
+      font-size: 14px;
+    }
+  }
+  .top_article_ttl {
+    font-size: getSize(32vw);
+    margin-top: getSize(40vw);
+    text-align: justify;
+    line-height: 1.5;
+    @include media(sp,min){
+      font-size: 18px;
+      margin-top: 35PX;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      flex-grow: 1; 
+    }
+  }
+  .top_article_tag {
+    margin: getSize(40vw) 0 0 0;
+    text-align: right;
+    @include media(sp, min) {
+      margin-top: 30px;
+    }
+  }
+  .top_article_tag_inner {
+    display: inline-block;
+    padding: getSize(8vw) getSize(15vw);
+    background-color: #dedede;
+    font-weight: bold;
+    font-size: getSize(20vw);
+    @include media(sp,min){
+      font-size: 12px;
+      padding: 7px 7px;
+    }
+  }
+  .pagination {
+    margin-top: getSize(80vw);
+    position: relative;
+    @include media(sp,min){
+      margin-top: 80px;
+    }
+  }
+  .pagination_nav {
+    width: 100%;
+    @include media(sp,min){
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+  .pagination_nav_item {
+    width: getSize(100vw);
+    height: getSize(100vw);
+    display: block;
+    @include media(sp,min){
+      width: 50px;
+      height: 50px;
+    }
+    &.mod-next {
+      margin-left: auto;
+      rotate: 180deg;
+    }
+  }
+</style>
+
+<style lang="scss" is:global>
+nav[role="navigation"] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .number,
+  em {
+    font: inherit;
+    font-size: getSize(40vw);
+    width: getSize(30vw);
+    height: getSize(30vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include media(sp,min){
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+    }
+  }
+  em {
+    opacity: 0.5;
+  }
+  .number {
+    color: #000;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  li {
+    margin: 0 10px;
+  }
+
+}
+</style>

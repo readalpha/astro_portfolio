@@ -1,0 +1,83 @@
+/*
+このファイルの用途・使用方法
+https://github.com/q-jutaku/coding_rule/blob/main/css.md#mixins_responsivescss
+*/
+@use "../variables/common" as *;
+
+$media: (
+  "sp": $sp,
+  "pc": $pc,
+  "print": 0.8,
+);
+
+@mixin media($type: sp, $rule: null) {
+  @if $type == sp or $type == pc {
+    @if ($type == sp and ($rule == max or $rule == null)) or
+      ($type == pc and ($rule == max))
+    {
+      $rule: max;
+    } @else {
+      $rule: min;
+    }
+    $breakpoint: map-get($media, $type);
+    @if $rule == max {
+      $breakpoint: $breakpoint - 1;
+    }
+    @media screen and (#{$rule}-width: $breakpoint) {
+      @content;
+    }
+  } @else if $type == tb {
+    $min_breakpoint: map-get($media, sp);
+    $max_breakpoint: map-get($media, pc) - 1;
+    @media screen and (min-width: $min_breakpoint) and (max-width: $max_breakpoint) {
+      @content;
+    }
+  } @else if $type == fom {
+    @media screen and ( #{$rule}-width: 540px ) {
+      @content;
+    }
+  } @else if $type == retina {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+      only screen and (min--moz-device-pixel-ratio: 2),
+      only screen and (-o-min-device-pixel-ratio: 2/1),
+      only screen and (min-device-pixel-ratio: 2),
+      only screen and (min-resolution: 192dpi),
+      only screen and (min-resolution: 2dppx) {
+      @content;
+    }
+  } @else if $type == print {
+    $magnification: map-get($media, $type);
+    @if $rule != null {
+      $magnification: $rule;
+    }
+    @media print {
+      html {
+        zoom: $magnification;
+      }
+      @content;
+    }
+  }
+}
+
+// firefoxのみ
+@mixin firefox {
+  @-moz-document url-prefix() {
+    @content;
+  }
+}
+
+/* chrome, edge */
+@mixin chrome {
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @content;
+  }
+}
+
+// safariのみ
+@mixin safari {
+  @at-root _::-webkit-full-page-media,
+    _:future,
+    :root & {
+    @content;
+  }
+}

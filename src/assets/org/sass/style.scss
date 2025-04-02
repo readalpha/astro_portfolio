@@ -1,0 +1,49 @@
+/*
+このファイルの用途・使用方法
+https://github.com/q-jutaku/coding_rule/blob/main/css.md#sassstylescss
+
+各importファイルの詳細
+https://github.com/q-jutaku/coding_rule/blob/main/css.md#%E5%90%84%E3%82%BB%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%A9%B3%E7%B4%B0
+*/
+
+@charset "UTF-8";
+
+// // reset
+@import "reset";
+
+// // variables
+@import "variables/common";
+@import "variables/fontfamily";
+@import "variables/skin";
+
+// // mixins
+@import "mixins/common";
+@import "mixins/responsive";
+
+// // functions
+@import "functions/common";
+
+// // core
+@import "core";
+
+
+// // libs
+// @import "libs/scroll-hint";
+
+// // parts
+// @import "parts/*";
+
+// // pages
+// @import "pages/*";
+
+// // utility
+// @import "util";
+
+// // print対策用
+// @media print {
+//   html {
+//     zoom: 0.8;
+//   }
+// }
+
+
