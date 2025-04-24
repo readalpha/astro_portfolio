@@ -11,11 +11,12 @@ const { props } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={props.url} />
     <title>{props.pageTitle}</title>
     <meta name="description" content={props.description} />
     <meta name="author" content="ReadAlpha" />
     <meta property="og:title" content={props.pageTitle} />
-    <meta property="og:description" content="ブログ詳細ページです。最新のブログ記事をお楽しみください。" />
+    <meta property="og:description" content={props.description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={props.url} />
     <meta property="og:image" content={props.ogImage} />
