@@ -1,12 +1,8 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogLayout from "../layouts/BlogLayout.astro";
 import { getBlogs, getBlogDetail } from "../library/microcms";
 import { formatDate } from "../components/time.astro";
 
-const props = {
-  id: "blog",
-  pageTitle: "ブログ詳細ページ",
-};
 
 // 詳細記事ページの全パスを取得
 export async function getStaticPaths() {
@@ -21,9 +17,16 @@ export async function getStaticPaths() {
 //記事の詳細情報を取得
 const { blogId } = Astro.params;
 const blog = await getBlogDetail(blogId as string);
+
+const props = {
+  id: "blog",
+  pageTitle: blog.title,
+  description: blog.editor.replace(/<[^>]*>/g, '').slice(0, 60) + '...',
+  url: `https://readalpha.com/blog/${blog.id}`
+};
 ---
 
-<BaseLayout props={props}>
+<BlogLayout props={props}>
   <main class="blog_main">
     <article class="blog_article">
       <h1 class="blog_title">{blog.title}</h1>
@@ -36,7 +39,7 @@ const blog = await getBlogDetail(blogId as string);
       <a href='/' class='blog_toTop'>Back To Top</a>
     </article>
   </main>
-</BaseLayout>
+</BlogLayout>
 
 <style lang="scss" is:global>
   @import "../assets/org/sass/style.scss";
